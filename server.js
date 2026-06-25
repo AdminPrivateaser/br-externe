@@ -187,7 +187,7 @@ function renderCard(key, data, index) {
     <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;margin-bottom:12px">
       <p style="color:#1A1A5E;font-size:12px;line-height:1.6;font-weight:500;margin:0">${s.reco}</p>
     </div>
-    <button onclick="window.open('${ctaHref}','_blank')"
+    <button onclick="if(window.umami){umami.track('cta_click',{scenario:'${key}',venue:'${data.venue_id}'})}; window.open('${ctaHref}','_blank')"
       style="display:flex;align-items:center;justify-content:center;gap:8px;background:#F0967A;color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;font-size:12px;width:100%;border:none;cursor:pointer">
       ${WA_ICON} ${ctaLabel}
     </button>
@@ -210,6 +210,7 @@ function renderPage(data) {
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Joy — ${name}</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script defer src="https://umami-production-6419.up.railway.app/script.js" data-website-id="a88c2899-babf-42ff-b139-71c91f687158"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
     body{background:#F8F8FF;color:#1A1A5E;min-height:100vh}
