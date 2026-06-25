@@ -114,13 +114,13 @@ const SCENARIOS = {
   direct_traffic_bad: {
     icon: '📣', label: 'Votre trafic', tone: 'neutral', tagLabel: 'Recommandation',
     metricKey: 'trafic_direct_color',
-    context: "Vous ne mettez pas assez en avant votre activité de groupe sur vos canaux (Instagram, Google, site internet).",
-    reco: "Pensez à mettre votre vitrine évènementielle en avant sur Instagram, Google et votre site internet pour que vos clients passent par la plateforme. Votre chargé de compte peut vous aider à activer ces leviers.",
+    context: "Vous ne mettez pas assez en avant votre activité de groupe sur vos canaux (Instagram, Google, etc.).",
+    reco: "Pensez à mettre votre vitrine évènementielle en avant sur Instagram, Google, etc. pour que vos clients passent par la plateforme. Votre chargé de compte peut vous aider à activer ces leviers.",
   },
   direct_traffic_good: {
     icon: '📣', label: 'Votre trafic', tone: 'positive', tagLabel: 'Opportunité ✨',
     metricKey: 'trafic_direct_color',
-    context: "Vous mettez bien en avant votre activité de groupe sur vos canaux.",
+    context: "Vous mettez bien en avant votre activité de groupe sur vos canaux (Instagram, Google, etc.).",
     reco: "Votre trafic direct est excellent. Continuez à mettre en avant votre vitrine évènementielle sur vos canaux pour maintenir ce niveau. Votre chargé de compte peut vous aider à aller encore plus loin.",
   },
   conversion: {
@@ -161,21 +161,17 @@ function renderCard(key, data, index) {
     ? `https://wa.me/${data.wa_number.replace(/[^0-9+]/g, '')}`
     : 'https://joy.privateaser.com';
 
-  // Pastille health score de la métrique liée à cette reco
+  // Emoji couleur à la place du tag opportunité/recommandation
   const metricColor = s.metricKey ? (data.metrics?.[s.metricKey] || '') : '';
-  const emoji = COLOR_EMOJI[metricColor] || '';
-  const metricBadge = emoji
-    ? `<span style="font-size:16px;margin-left:4px">${emoji}</span>`
-    : '';
+  const colorEmoji  = COLOR_EMOJI[metricColor] || '';
 
   return `<div style="background:#fff;border-radius:16px;padding:20px;animation:fadeIn .35s ease ${delay}s both;box-shadow:0 2px 16px rgba(26,26,94,0.07);${style.cardBorder}">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:8px">
         <div style="width:36px;height:36px;border-radius:10px;${style.iconBg};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${s.icon}</div>
         <p style="font-weight:700;color:#1A1A5E;font-size:13px;line-height:1.3;margin:0">${s.label}</p>
-        ${metricBadge}
       </div>
-      <span style="font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap;${style.tagStyle}">${s.tagLabel}</span>
+      ${colorEmoji ? `<span style="font-size:22px">${colorEmoji}</span>` : ''}
     </div>
     <p style="color:#9099B0;font-size:12px;line-height:1.5;margin:0 0 8px;border-top:1px solid #f1f5f9;padding-top:12px;font-style:italic">${s.context}</p>
     <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;margin-bottom:12px">
