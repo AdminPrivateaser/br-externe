@@ -110,6 +110,8 @@ const SCENARIOS = {
     metricKey: 'search_color',
     context: 'Privateaser vous apporte assez de visibilité par rapport à votre abonnement.',
     reco: "Vous avez atteint le plafond de visibilité inclus dans votre abonnement actuel. Pour accéder à davantage de trafic, votre chargé de compte peut vous présenter les options disponibles. Assurez-vous que la conversion et la transformation des demandes suivent.",
+    ctaLabel: '📈 Je veux upsell',
+    ctaHref: 'wa', // → wa.me de l'AE
   },
   direct_traffic_bad: {
     icon: '📣', label: 'Votre trafic', tone: 'neutral', tagLabel: 'Recommandation',
@@ -128,6 +130,8 @@ const SCENARIOS = {
     metricKey: 'conversion_color',
     context: "Les organisateurs qui voient votre lieu ne le choisissent pas.",
     reco: "Votre lieu ne plaît pas assez aux organisateurs. Ajoutez sur votre vitrine des photos, des vidéos de vrais événements et des avis pour convaincre davantage.",
+    ctaLabel: 'Envoyez nous vos contenus',
+    ctaHref: 'https://joy.io/media', // → lien fixe
   },
   transformation: {
     icon: '✅', label: 'Transformation des demandes', tone: 'neutral', tagLabel: 'Recommandation',
@@ -161,6 +165,12 @@ function renderCard(key, data, index) {
     ? `https://wa.me/${data.wa_number.replace(/[^0-9+]/g, '')}`
     : 'https://joy.privateaser.com';
 
+  // CTA : utilise le lien fixe si défini, sinon WA de l'AE
+  const ctaLabel = s.ctaLabel || 'Contacter mon chargé de compte';
+  const ctaHref  = (s.ctaHref && s.ctaHref !== 'wa')
+    ? s.ctaHref
+    : waHref;
+
   // Emoji couleur à la place du tag opportunité/recommandation
   const metricColor = s.metricKey ? (data.metrics?.[s.metricKey] || '') : '';
   const colorEmoji  = COLOR_EMOJI[metricColor] || '';
@@ -177,9 +187,9 @@ function renderCard(key, data, index) {
     <div style="background:#f8fafc;border-radius:10px;padding:10px 12px;margin-bottom:12px">
       <p style="color:#1A1A5E;font-size:12px;line-height:1.6;font-weight:500;margin:0">${s.reco}</p>
     </div>
-    <button onclick="window.open('${waHref}','_blank')"
+    <button onclick="window.open('${ctaHref}','_blank')"
       style="display:flex;align-items:center;justify-content:center;gap:8px;background:#F0967A;color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;font-size:12px;width:100%;border:none;cursor:pointer">
-      ${WA_ICON} Contacter mon chargé de compte
+      ${WA_ICON} ${ctaLabel}
     </button>
   </div>`;
 }
